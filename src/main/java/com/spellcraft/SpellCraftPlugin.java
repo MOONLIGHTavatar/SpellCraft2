@@ -207,6 +207,7 @@ public class SpellCraftPlugin extends JavaPlugin {
             spellManager.registerSpellAsync(new ShieldSpell());
             spellManager.registerSpellAsync(new EarthBlock());
             spellManager.registerSpellAsync(new Flamethrower());
+            spellManager.registerSpellAsync(new AquaMissile());
 
             getLogger().info("Registered " + spellManager.getAllSpells().size() + " spells");
         });

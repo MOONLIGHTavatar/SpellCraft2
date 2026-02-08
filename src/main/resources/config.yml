@@ -37,6 +37,19 @@ spells:
     explosion-power: 2.0
     speed: 1.5
 
+  aqua-missile:
+    enabled: true
+    magic-cost: 35
+    cooldown: 6000
+    range: 40.0
+    damage: 6.0
+    speed: 0.6
+    hit-radius: 1.5
+    max-ticks: 100
+    source-range: 10.0
+    require-source: true
+
+
   flamethrower:
     magic-cost: 30
     cooldown: 5000   # milliseconds
