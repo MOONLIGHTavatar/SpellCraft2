@@ -34,7 +34,17 @@ public enum SpellCategory {
     /**
      * Spells focused on movement and travel.
      */
-    TRANSPORTATION("Transportation", "Spells for movement and travel");
+    TRANSPORTATION("Transportation", "Spells for movement and travel"),
+
+    /**
+     * Spells that are used for wide ranged attacks
+     */
+    OFFENSIVE("Offensive", "Spells used for wide range attacks"),
+
+    /**
+     * Spells that summon pets or creatures
+     */
+    SUMMONING("Summoning", "Spells that summon pets or creatures");
 
     private final String displayName;
     private final String description;

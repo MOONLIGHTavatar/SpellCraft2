@@ -80,7 +80,8 @@ public final class House {
                     Set.of(
                             MagicElement.DARK,
                             MagicElement.SHADOW,
-                            MagicElement.VOID
+                            MagicElement.VOID,
+                            MagicElement.LIGHT
                     )
             );
 

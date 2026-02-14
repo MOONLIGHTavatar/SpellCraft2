@@ -48,6 +48,10 @@ public final class MagicElement {
     public static final MagicElement NATURE =
             new MagicElement("NATURE", NamedTextColor.GREEN);
 
+     /** Nature-based magic element. */
+    public static final MagicElement LIGHT=
+            new MagicElement("LIGHT", NamedTextColor.YELLOW);
+            
     /** Dark magic element. */
     public static final MagicElement DARK =
             new MagicElement("DARK", NamedTextColor.DARK_PURPLE);
