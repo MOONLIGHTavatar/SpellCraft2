@@ -199,6 +199,7 @@ public class SpellCasterImpl implements SpellCaster {
 
     @Override
     public SpellResult castSpell(Spell spell) {
+
         if (!hasLearnedSpell(spell)) {
             Bukkit.getPluginManager().callEvent(new SpellFailEvent(this, spell, "NOT_LEARNED"));
             return SpellResult.FAILURE;
@@ -212,22 +213,33 @@ public class SpellCasterImpl implements SpellCaster {
             return SpellResult.FAILURE;
         }
 
-        if (!hasMagic(pre.getMagicCost())) {
-            Bukkit.getPluginManager().callEvent(new SpellFailEvent(this, spell, "INSUFFICIENT_MAGIC"));
-
+        if (isOnCooldown(spell)) {
+            Bukkit.getPluginManager().callEvent(new SpellFailEvent(this, spell, "COOLDOWN"));
             return SpellResult.FAILURE;
         }
 
-        if (!isOnCooldown(spell)) {
-            consumeMagic(pre.getMagicCost());
+        if (!hasMagic(pre.getMagicCost())) {
+            Bukkit.getPluginManager().callEvent(new SpellFailEvent(this, spell, "INSUFFICIENT_MAGIC"));
+            return SpellResult.FAILURE;
         }
 
+        // attempt cast FIRST
         SpellResult result = spell.cast(this);
-        if (result == SpellResult.SUCCESS) {
-            Bukkit.getPluginManager().callEvent(new SpellCastEvent(this, spell));
+
+        if (result != SpellResult.SUCCESS) {
+            Bukkit.getPluginManager().callEvent(new SpellFailEvent(this, spell, "CAST_FAILED"));
+            return result;
         }
 
-        return result;
+        // only consume magic AFTER success
+        consumeMagic(pre.getMagicCost());
+
+        // apply cooldown AFTER success
+        setCooldown(spell, spell.getCooldown());
+
+        Bukkit.getPluginManager().callEvent(new SpellCastEvent(this, spell));
+
+        return SpellResult.SUCCESS;
     }
 
     @Override

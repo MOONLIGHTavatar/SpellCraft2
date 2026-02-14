@@ -44,15 +44,15 @@ spells:
     range: 100.0
     speed: 1.5
 
-  spells:
-    earthkick:
-      enabled: true
-      magic-cost: 25
-      cooldown: 4000
-      damage: 6.0
-      max-blocks: 4
-      lava-multiplier: 1.5
-      duration: 2500
+
+  earthkick:
+    enabled: true
+    magic-cost: 25
+    cooldown: 4000
+    damage: 6.0
+    max-blocks: 4
+    lava-multiplier: 1.5
+    duration: 2500
 
 
   aqua-missile:
@@ -101,6 +101,16 @@ spells:
     magic-cost: 25
     cooldown: 12000
     duration: 200
+
+  watermanipulation:
+    enabled: true
+    magic-cost: 25
+    cooldown: 4000
+    range: 40.0
+    speed: 0.8
+    damage: 5.0
+    hit-radius: 1.5
+    max-ticks: 200
 
 # UI Settings
 ui:
