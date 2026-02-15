@@ -26,7 +26,7 @@ public class AngelFlareSpell extends AbstractSpell {
 
     public AngelFlareSpell() {
         super(
-                "Angel Flare",
+                "AngelFlare",
                 "Shoots a concentrated light beam wherever the crosshair points",
                 SpellCategory.OFFENSIVE,
                 SpellCraftPlugin.getInstance().getConfig().getInt("spells.angelflare.magic-cost", 60),
