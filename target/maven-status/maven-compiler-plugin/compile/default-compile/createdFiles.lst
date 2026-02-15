@@ -1,6 +1,7 @@
 com/spellcraft/spells/Flamethrower.class
 com/spellcraft/spells/TeleportSpell.class
 com/spellcraft/util/TempFallingBlock.class
+com/spellcraft/spells/DragonBreathSpell.class
 com/spellcraft/core/data/PlayerDataManager$PlayerSnapshot.class
 com/spellcraft/util/BlockSource.class
 com/spellcraft/api/SpellResult.class

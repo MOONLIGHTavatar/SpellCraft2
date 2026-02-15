@@ -1,241 +1,173 @@
+<div align="center">
+✨ SpellCraft2 🎇  
+A modern magic system for Minecraft servers  
 
-# SpellCraft
-
-SpellCraft is a fully featured, extensible magic system for Minecraft servers running **Paper/Spigot or Folia**.  
-It provides a complete spellcasting framework for players and a clean, powerful API for developers to create custom spell addons.
-
-SpellCraft is designed to be **addon-first**, **thread-safe**, and **easy to extend** without touching core code.
-
----
-
-## Features
-
-- Magic resource system with regeneration and UI magic bar
-- Spell casting with cooldowns, costs, permissions, and categories
-- Built-in spells (Fireball, Heal, Teleport, Lightning, Shield, etc.)
-- Craftable and world-generated spellbooks
-- Perks system (`perks.yml`)
-- Fully Folia-compatible via `ThreadUtil`
-- Clean API for external spell addons
-- Automatic spell tracking & lifecycle management
+Paper • Spigot • Folia • Extensible • High Performance
+</div>
 
 ---
 
-## Installation
+🌟 **About**
 
-1. Drop `SpellCraft.jar` into your server’s `plugins/` folder  
-2. Start the server once to generate configs:
-```
-plugins/SpellCraft/config.yml
-plugins/SpellCraft/perks.yml
-````
+SpellCraft2 is a powerful, extensible magic plugin designed for modern Minecraft servers.  
+It builds on the original SpellCraft with:
 
-3. Configure values as desired
-4. Restart the server
+- New spells  
+- Perks & progression  
+- Folia-safe performance  
+- Developer-friendly API  
 
----
-
-## Core Concepts
-
-Before writing an addon, it helps to understand how SpellCraft works internally.
-
-### Spells
-
-- Every spell **extends `AbstractSpell`**
-- Spell lifecycle is handled automatically
-- Cooldowns, magic cost, permissions, and tracking are built-in
-
-### Spell Lifecycle
-
-1. Spell is registered
-2. Player attempts to cast
-3. `canCast()` is checked
-4. `execute()` is called once
-5. If successful:
-   - Magic is consumed
-   - Cooldown is applied
-   - Spell is tracked
-6. `progress()` is called repeatedly (if scheduled)
-7. `remove()` stops the spell and calls `onStop()`
+Perfect for RPG servers, fantasy worlds, and large-scale multiplayer servers.
 
 ---
 
-## Creating an Addon Spell Plugin
+🚀 **Features**
 
-### 1. Plugin Setup
+### 🪄 Core Magic System
+- Mana-based casting with regeneration  
+- Action bar magic UI  
+- Configurable cooldowns  
+- Permission-based spell access  
 
-Create a new plugin and **depend on SpellCraft**.
+### 🔥 Built-in Spells
+Includes a growing spell library:  
 
-#### `plugin.yml`
+- 🔥 Fireball  
+- ⚡ Lightning  
+- ❤️ Heal  
+- 🌀 Teleport  
+- 🛡️ Shield  
+- ❄️ Elemental magic  
 
-```yaml
-name: MySpellAddon
-version: 1.0
-main: com.myplugin.MySpellAddon
-depend: [SpellCraft]
-api-version: 1.20
-````
+Each spell supports:  
+- Mana cost  
+- Cooldowns  
+- Permissions  
+- Custom configs  
 
-Add `SpellCraft.jar` to your project dependencies.
+### 📖 Spellbooks
+Unlock magic through progression:  
+- Craftable spellbooks  
+- World-generated loot  
+- Command distribution  
+- Configurable progression  
+
+### 📊 Perks System
+Permanent upgrades via `plugins/SpellCraft2/perks.yml`. Examples:  
+- Faster mana regen  
+- Reduced cooldowns  
+- Passive buffs  
+- RPG-style builds  
+
+### 🧵 Folia Ready
+Fully thread-safe:  
+- Region scheduler support  
+- Async-safe casting  
+- High scalability  
+- Future-proof architecture  
+
+### 🔌 Developer API
+Easily create addons:  
+- Custom spells  
+- Custom perks  
+- Mana hooks  
+- Event integrations  
 
 ---
 
-### 2. Creating a Spell
+📦 **Installation**
 
-All spells **must extend `AbstractSpell`**.
+1️⃣ **Download**  
+Get the latest `SpellCraft2.jar`  
 
-Example spell:
+2️⃣ **Install**  
+Place inside `/plugins/`  
+
+3️⃣ **First Launch**  
+Start the server once to generate configs:  
+- `plugins/SpellCraft2/config.yml`  
+- `plugins/SpellCraft2/perks.yml`  
+
+4️⃣ **Configure**  
+Edit configs → Restart server ✅  
+
+---
+
+⚙️ **Compatibility**
+- ✔ Paper 1.20+  
+- ✔ Spigot 1.20+  
+- ✔ Folia Supported  
+- ⚠ Bukkit (Not Recommended)  
+
+---
+
+🧙 **Commands**
+- **Main:** `/spell <subcommand>`  
+- **Casting:** `/spell cast <spell>`  
+- **Spellbooks:** `/spell give <player> <spellbook>`  
+- **Perks:** `/spell perks`  
+- **Admin:** `/spell reload`  
+
+---
+
+🔐 **Permissions**
+
+- **spellcraft2.** `All permissions`
+- **spellcraft2.command.** `Commands`
+- **spellcraft2.spell.**  `Spells`
+- **spellcraft2.perks.** `Perks`
+
+- **spellcraft2.admin** `All permissions.`
+- **spellcraft2.reload** `Reload`
+
+
+
+---
+
+⚡ **Mana System**
+Flexible and configurable:  
+- Regen over time  
+- Spell costs  
+- Scalable balancing  
+- RPG-ready design  
+
+Edit in `config.yml`.
+
+---
+
+🛠️ **Configuration**
+Main file: `plugins/SpellCraft2/config.yml`  
+Customize:  
+- Mana values  
+- Spell cooldowns  
+- UI behavior  
+- Enabled features  
+- Balance settings  
+
+---
+
+🔌 **Soft Dependencies**
+Optional integrations:  
+- WorldGuard  
+- GriefPrevention  
+
+Adds region-safe spellcasting.
+
+---
+
+🧑‍💻 **Developer API**
+
+Example usage:
 
 ```java
-package com.myplugin.spells;
+Spell spell = new SpellBuilder("FireNova")
+    .manaCost(25)
+    .cooldown(10)
+    .onCast(player -> {
+        player.getWorld().createExplosion(player.getLocation(), 2F);
+    })
+    .build();
 
-import com.spellcraft.api.SpellCaster;
-import com.spellcraft.api.SpellResult;
-import com.spellcraft.api.SpellCategory;
-import com.spellcraft.api.magic.MagicElement;
-import com.spellcraft.core.AbstractSpell;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
-import org.jetbrains.annotations.NotNull;
+SpellRegistry.register(spell);
 
-public class IceSpikeSpell extends AbstractSpell {
 
-    private Location currentLocation;
-
-    public IceSpikeSpell() {
-        super(
-                "Ice Spike",
-                "Launch a sharp spike of ice",
-                SpellCategory.COMBAT,
-                25,          // magic cost
-                5000L,       // cooldown (ms)
-                40.0,        // range
-                true,        // enabled
-                "Right Click Air"
-        );
-    }
-
-    @Override
-    protected SpellResult execute(SpellCaster caster) {
-        Player player = caster.getPlayer();
-
-        // Spell logic here
-        currentLocation = player.getEyeLocation().clone();
-
-        return SpellResult.SUCCESS;
-    }
-
-    @Override
-    public void progress() {
-        // Optional: ongoing logic
-    }
-
-    @Override
-    protected void onLoad() {
-        // Called once when registered
-    }
-
-    @Override
-    protected void onStop() {
-        // Cleanup logic
-    }
-
-    @Override
-    public boolean isSneakingAbility() {
-        return false;
-    }
-
-    @Override
-    public Action getAbilityActivationAction() {
-        return Action.RIGHT_CLICK_AIR;
-    }
-
-    @Override
-    public MagicElement getElement() {
-        return MagicElement.ICE;
-    }
-
-    @Override
-    public @NotNull Location getLocation() {
-        return currentLocation != null
-                ? currentLocation.clone()
-                : new Location(Bukkit.getWorlds().getFirst(), 0, 0, 0);
-    }
-}
-```
-
----
-
-### 3. Registering Your Spell
-
-Register spells **asynchronously** in `onEnable()`.
-
-```java
-@Override
-public void onEnable() {
-    SpellCraftPlugin spellCraft = SpellCraftPlugin.getInstance();
-
-    ThreadUtil.runAsync(() -> {
-        spellCraft.getSpellManager().registerSpellAsync(new IceSpikeSpell());
-    });
-}
-```
-
-SpellCraft will automatically:
-
-* Call `onLoad()`
-* Track the spell
-* Handle casting and removal
-
----
-
-## Permissions
-
-Each spell automatically generates a permission node:
-
-```
-spellcraft.spell.<spellname>
-```
-
-Example:
-
-```
-spellcraft.spell.icespike
-```
-
-Players **must** have this permission to cast the spell.
-
----
-
-## Threading & Folia Safety
-
-SpellCraft is fully thread-safe.
-
-Use:
-
-* `ThreadUtil.runAsync(...)`
-* `ThreadUtil.ensureLocationTimer(...)`
-
-Never use Bukkit schedulers directly for spell logic.
-
----
-
-## Best Practices
-
-* Always return an appropriate `SpellResult`
-* Use `progress()` for moving or timed effects
-* Clean up entities and tasks in `onStop()`
-* Avoid heavy logic in constructors
-* Read values from config where possible
-
----
-
-## Summary
-
-SpellCraft provides a clean, powerful foundation for magical gameplay while keeping addon development simple and safe.
-
-If you can extend a class — you can write spells.
-
-Happy casting ✨
