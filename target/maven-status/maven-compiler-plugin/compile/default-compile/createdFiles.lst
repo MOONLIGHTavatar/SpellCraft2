@@ -46,6 +46,7 @@ com/spellcraft/util/HouseUtil.class
 com/spellcraft/commands/SpellBindCommand.class
 com/spellcraft/core/perks/PerkManager.class
 com/spellcraft/util/ThreadUtil$ThreadTask.class
+com/spellcraft/spells/GolemSpell$1.class
 com/spellcraft/api/Spell.class
 com/spellcraft/hooks/WGHook.class
 com/spellcraft/core/SpellBookSpawner.class

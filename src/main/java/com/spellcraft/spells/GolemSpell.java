@@ -55,11 +55,14 @@ public class GolemSpell extends AbstractSpell {
 
             summonedGolems.add(golem);
 
-            // **Automatically remove the golem after 1 minute (60 seconds = 1200 ticks)**
-            ThreadUtil.ensureLocationLater(spawnLocation, () -> {
-                if (golem != null && !golem.isDead()) {
-                    golem.remove();
-                    summonedGolems.remove(golem);
+            // **Despawn golem after 1 minute**
+            ThreadUtil.ensureLocationLater(spawnLocation, new Runnable() {
+                @Override
+                public void run() {
+                    if (golem != null && !golem.isDead()) {
+                        golem.remove();
+                        summonedGolems.remove(golem);
+                    }
                 }
             }, 1200L); // 1200 ticks = 60 seconds
         }
@@ -69,7 +72,6 @@ public class GolemSpell extends AbstractSpell {
 
     @Override
     public void progress() {
-        // Teleport golems to player if too far
         for (IronGolem golem : new ArrayList<>(summonedGolems)) {
             if (golem == null || golem.isDead()) continue;
             Player player = getLocation().getWorld().getPlayers().stream()
@@ -85,7 +87,6 @@ public class GolemSpell extends AbstractSpell {
     protected void onLoad() {}
     @Override
     protected void onStop() {
-        // Remove all golems if plugin disables
         for (IronGolem golem : summonedGolems) {
             if (golem != null && !golem.isDead()) golem.remove();
         }
@@ -94,13 +95,10 @@ public class GolemSpell extends AbstractSpell {
 
     @Override
     public boolean isSneakingAbility() { return true; }
-
     @Override
     public Action getAbilityActivationAction() { return Action.RIGHT_CLICK_AIR; }
-
     @Override
     public MagicElement getElement() { return MagicElement.EARTH; }
-
     @Override
     public @NotNull Location getLocation() {
         return currentLocation != null ? currentLocation.clone() : new Location(Bukkit.getWorlds().getFirst(), 0,0,0);
