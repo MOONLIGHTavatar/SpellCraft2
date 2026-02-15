@@ -4,8 +4,8 @@ main: com.spellcraft.SpellCraftPlugin
 api-version: '1.20'
 folia-supported: true
 soft-depend: [WorldGuard, GriefPrevention]
-author: Hihelloy
-description: A comprehensive magic based spell system for Minecraft
+author: Hihelloy, Moonlight, and the Magemc team
+description: A comprehensive magic based spell system for Minecraft servers, allowing players to create, customize, and cast spells with unique effects and interactions.
 libraries:
   - net.kyori:adventure-api:4.26.1
   - net.kyori:adventure-platform-bukkit:4.4.1
