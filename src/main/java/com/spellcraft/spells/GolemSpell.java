@@ -31,9 +31,9 @@ public class GolemSpell extends AbstractSpell {
                 SpellCategory.SUMMONING,
                 SpellCraftPlugin.getInstance().getConfig().getInt("spells.golem.magic-cost", 120),
                 SpellCraftPlugin.getInstance().getConfig().getLong("spells.golem.cooldown", 20000),
-                10.0, // range placeholder
+                10.0,
                 SpellCraftPlugin.getInstance().getConfig().getBoolean("spells.golem.enabled", true),
-                "Right Click a Block while Sneaking"
+                "Crouch to summon"
         );
     }
 
@@ -42,48 +42,50 @@ public class GolemSpell extends AbstractSpell {
         Player player = caster.getPlayer();
         currentLocation = player.getLocation().clone();
 
-        ThreadUtil.ensureLocationTimer(currentLocation, () -> {
-            if (!player.isOnline() || player.isDead() || !player.isSneaking()) {
-                remove();
-                return;
-            }
+        for (int i = 0; i < 2; i++) {
+            Location spawnLocation = currentLocation.clone().add((i == 0 ? 1 : -1), 0, 2);
+            IronGolem golem = (IronGolem) spawnLocation.getWorld().spawn(spawnLocation, IronGolem.class);
+            golem.setCustomName(player.getName() + "'s Golem " + (i + 1));
+            golem.setCustomNameVisible(true);
+            golem.setPlayerCreated(true);
 
-            if (summonedGolems.isEmpty()) {
-                for (int i = 0; i < 2; i++) {
-                    Location spawnLocation = currentLocation.clone().add((i == 0 ? 1 : -1), 0, 2);
-                    IronGolem golem = (IronGolem) spawnLocation.getWorld().spawn(spawnLocation, IronGolem.class);
-                    golem.setCustomName(player.getName() + "'s Golem " + (i + 1));
-                    golem.setCustomNameVisible(true);
-                    golem.setPlayerCreated(true);
+            // Particle and sound effect
+            spawnLocation.getWorld().spawnParticle(Particle.CRIT_MAGIC, spawnLocation, 50, 1, 1, 1);
+            player.playSound(spawnLocation, Sound.ENTITY_IRON_GOLEM_STEP, 1f, 1.2f);
 
-                    spawnLocation.getWorld().spawnParticle(Particle.CRIT_MAGIC, spawnLocation, 50, 1, 1, 1);
-                    player.playSound(spawnLocation, Sound.ENTITY_IRON_GOLEM_STEP, 1f, 1.2f);
+            summonedGolems.add(golem);
 
-                    summonedGolems.add(golem);
+            // **Automatically remove the golem after 1 minute (60 seconds = 1200 ticks)**
+            ThreadUtil.ensureLocationLater(spawnLocation, () -> {
+                if (golem != null && !golem.isDead()) {
+                    golem.remove();
+                    summonedGolems.remove(golem);
                 }
-            }
-
-            // Follow player
-            for (IronGolem golem : new ArrayList<>(summonedGolems)) {
-                if (golem == null || golem.isDead()) continue;
-                if (golem.getLocation().distance(player.getLocation()) > 5) {
-                    golem.teleport(player.getLocation());
-                }
-            }
-
-        }, 0, 1);
+            }, 1200L); // 1200 ticks = 60 seconds
+        }
 
         return SpellResult.SUCCESS;
     }
 
     @Override
-    public void progress() {}
+    public void progress() {
+        // Teleport golems to player if too far
+        for (IronGolem golem : new ArrayList<>(summonedGolems)) {
+            if (golem == null || golem.isDead()) continue;
+            Player player = getLocation().getWorld().getPlayers().stream()
+                    .filter(p -> golem.getCustomName() != null && golem.getCustomName().startsWith(p.getName()))
+                    .findFirst().orElse(null);
+            if (player != null && golem.getLocation().distance(player.getLocation()) > 5) {
+                golem.teleport(player.getLocation());
+            }
+        }
+    }
 
     @Override
     protected void onLoad() {}
-
     @Override
     protected void onStop() {
+        // Remove all golems if plugin disables
         for (IronGolem golem : summonedGolems) {
             if (golem != null && !golem.isDead()) golem.remove();
         }
@@ -94,10 +96,10 @@ public class GolemSpell extends AbstractSpell {
     public boolean isSneakingAbility() { return true; }
 
     @Override
-    public Action getAbilityActivationAction() { return Action.RIGHT_CLICK_BLOCK; }
+    public Action getAbilityActivationAction() { return Action.RIGHT_CLICK_AIR; }
 
     @Override
-    public MagicElement getElement() { return MagicElement.DARK; }
+    public MagicElement getElement() { return MagicElement.EARTH; }
 
     @Override
     public @NotNull Location getLocation() {
