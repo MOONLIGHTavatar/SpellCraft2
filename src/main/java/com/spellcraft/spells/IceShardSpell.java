@@ -1,11 +1,12 @@
 package com.spellcraft.spells;
 
 import com.spellcraft.SpellCraftPlugin;
-import com.spellcraft.api.SpellCategory;
 import com.spellcraft.api.SpellCaster;
+import com.spellcraft.api.SpellCategory;
 import com.spellcraft.api.SpellResult;
 import com.spellcraft.api.magic.MagicElement;
 import com.spellcraft.core.AbstractSpell;
+import com.spellcraft.util.ThreadUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,10 +17,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.block.Action;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +40,7 @@ public class IceShardSpell extends AbstractSpell implements Listener {
                 SpellCategory.OFFENSIVE,
                 SpellCraftPlugin.getInstance().getConfig().getInt("spells.iceshard.magic-cost", 50),
                 SpellCraftPlugin.getInstance().getConfig().getLong("spells.iceshard.cooldown", 7000),
-                null,
+                10.0, // range placeholder
                 SpellCraftPlugin.getInstance().getConfig().getBoolean("spells.iceshard.enabled", true),
                 "Right Click while Sneaking"
         );
@@ -55,18 +56,15 @@ public class IceShardSpell extends AbstractSpell implements Listener {
         Block sourceBlock = findIceOrWater(player);
         if (sourceBlock == null) return SpellResult.FAILURE;
 
-        for (int i = 0; i < 5; i++) {
-            Snowball shard = player.launchProjectile(
-                    Snowball.class,
-                    getSpreadVector(player.getLocation().getDirection())
-            );
-
-            shard.setShooter(player);
-            shard.setCustomName("IceShard");
-        }
-
-        player.getWorld().spawnParticle(Particle.SNOWFLAKE, player.getLocation(), 30, 1, 1, 1);
-        player.playSound(player.getLocation(), Sound.ENTITY_SNOWBALL_THROW, 1.0f, 1.2f);
+        ThreadUtil.ensureLocationTimer(currentLocation, () -> {
+            for (int i = 0; i < 5; i++) {
+                Snowball shard = player.launchProjectile(Snowball.class, getSpreadVector(player.getLocation().getDirection()));
+                shard.setShooter(player);
+                shard.setCustomName("IceShard");
+            }
+            player.getWorld().spawnParticle(Particle.SNOWFLAKE, player.getLocation(), 30, 1,1,1);
+            player.playSound(player.getLocation(), Sound.ENTITY_SNOWBALL_THROW, 1f, 1.2f);
+        }, 0, 1);
 
         return SpellResult.SUCCESS;
     }
@@ -75,36 +73,20 @@ public class IceShardSpell extends AbstractSpell implements Listener {
         Location center = player.getLocation();
         int radius = 16;
 
-        // Search for ICE first
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
+        for (int x = -radius; x <= radius; x++)
+            for (int y = -radius; y <= radius; y++)
                 for (int z = -radius; z <= radius; z++) {
-                    Block block = center.clone().add(x, y, z).getBlock();
-                    if (block.getType() == Material.ICE) return block;
+                    Block block = center.clone().add(x,y,z).getBlock();
+                    if (block.getType() == Material.ICE || block.getType() == Material.WATER) return block;
                 }
-            }
-        }
-
-        // Then search for WATER
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
-                    Block block = center.clone().add(x, y, z).getBlock();
-                    if (block.getType() == Material.WATER) return block;
-                }
-            }
-        }
-
         return null;
     }
 
     private Vector getSpreadVector(Vector direction) {
         double spread = 0.25;
-
         double dx = direction.getX() + (random.nextDouble() - 0.5) * spread;
         double dy = direction.getY() + (random.nextDouble() - 0.5) * spread;
         double dz = direction.getZ() + (random.nextDouble() - 0.5) * spread;
-
         return new Vector(dx, dy, dz).normalize().multiply(1.6);
     }
 
@@ -115,29 +97,11 @@ public class IceShardSpell extends AbstractSpell implements Listener {
 
         Entity hit = event.getHitEntity();
         if (hit instanceof LivingEntity target) {
-
             target.damage(damageAmount);
-
-            Vector knockback = target.getLocation().toVector()
-                    .subtract(event.getEntity().getLocation().toVector())
-                    .normalize()
-                    .multiply(knockbackStrength);
-
+            Vector knockback = target.getLocation().toVector().subtract(event.getEntity().getLocation().toVector()).normalize().multiply(knockbackStrength);
             target.setVelocity(knockback);
-
-            target.getWorld().spawnParticle(
-                    Particle.SNOWFLAKE,
-                    target.getLocation().add(0, 1, 0),
-                    15,
-                    0.3, 0.3, 0.3
-            );
-
-            target.getWorld().playSound(
-                    target.getLocation(),
-                    Sound.BLOCK_GLASS_BREAK,
-                    1.0f,
-                    1.2f
-            );
+            target.getWorld().spawnParticle(Particle.SNOWFLAKE, target.getLocation().add(0,1,0), 15, 0.3,0.3,0.3);
+            target.getWorld().playSound(target.getLocation(), Sound.BLOCK_GLASS_BREAK, 1f,1.2f);
         }
     }
 
@@ -151,24 +115,16 @@ public class IceShardSpell extends AbstractSpell implements Listener {
     protected void onStop() {}
 
     @Override
-    public boolean isSneakingAbility() {
-        return true;
-    }
+    public boolean isSneakingAbility() { return true; }
 
     @Override
-    public Action getAbilityActivationAction() {
-        return Action.RIGHT_CLICK_AIR;
-    }
+    public Action getAbilityActivationAction() { return Action.RIGHT_CLICK_AIR; }
 
     @Override
-    public MagicElement getElement() {
-        return MagicElement.ICE;
-    }
+    public MagicElement getElement() { return MagicElement.ICE; }
 
     @Override
     public @NotNull Location getLocation() {
-        return currentLocation != null
-                ? currentLocation.clone()
-                : new Location(Bukkit.getWorlds().getFirst(), 0, 0, 0);
+        return currentLocation != null ? currentLocation.clone() : new Location(Bukkit.getWorlds().getFirst(),0,0,0);
     }
 }
