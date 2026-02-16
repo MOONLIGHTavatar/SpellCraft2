@@ -44,7 +44,13 @@ public enum SpellCategory {
     /**
      * Spells that summon pets or creatures
      */
-    SUMMONING("Summoning", "Spells that summon pets or creatures");
+    SUMMONING("Summoning", "Spells that summon pets or creatures"),
+
+    /**
+     * ULTIMATE spells are powerful abilities with long cooldowns and high magic cost.
+     * They often have unique effects and can turn the tide of battle.
+     */
+    ULTIMATE ("Ultimate", "Powerful spells with long cooldowns and high magic cost");
 
     private final String displayName;
     private final String description;

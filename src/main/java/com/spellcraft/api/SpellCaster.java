@@ -198,4 +198,14 @@ public interface SpellCaster {
      * @return true if this SpellCaster belongs to a {@link House}, false otherwise.
      */
     boolean hasHouse();
+
+    /**
+     * @return this SpellCaster's magic power used for scaling spell effects.
+     * <p>
+     * By default this returns {@link #getMaxMagic()}, implementations may override
+     * to provide a different calculation (perks, attributes, etc.).
+     */
+    default int getMagicPower() {
+        return getMaxMagic();
+    }
 }

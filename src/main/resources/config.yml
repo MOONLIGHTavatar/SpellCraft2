@@ -109,7 +109,7 @@ spells:
     hit-radius: 1.5
     max-ticks: 200
 
-    Iceshard:
+    iceshard:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -119,7 +119,8 @@ spells:
     hit-radius: 1.5
     max-ticks: 200
 
-    Angelflare:
+    
+    angellightbeam:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -129,7 +130,7 @@ spells:
     hit-radius: 1.5
     max-ticks: 200
 
-    Golemspell:
+    golemspell:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -139,8 +140,7 @@ spells:
     hit-radius: 1.5
     max-ticks: 200
 
-  # New Abilities
-  flamewave:
+  dragonbreath:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -152,18 +152,78 @@ spells:
       count: 5                 # Particles per tick
       radius: 1.5              # Spread radius around player
 
-  dragonbreath:
+# New Abilites Settings
+
+  magmabarrage:
     enabled: true
-    magic-cost: 40
+    magic-cost: 60
+    cooldown: 6000
+    range: 20.0
+    damage: 5.0
+    shots: 8
+    burn-time: 60
+
+  shadowtentacles:
+    enabled: true
+    magic-cost: 70
     cooldown: 8000
-    range: 5.0
+    range: 16.0
     damage: 6.0
-    particles:
-      type-main: FLAME
-      type-secondary: SOUL_FIRE_FLAME
-      count: 10
-      radius: 2.5
-      duration-ticks: 40       # How long the particle effect lasts
+    pull-duration: 20
+
+  lavadragon:
+    enabled: true
+    magic-cost: 120
+    cooldown: 15000
+    range: 30.0
+    damage: 8.0
+    travel-distance: 20
+
+  naturegrasp:
+    enabled: true
+    magic-cost: 65
+    cooldown: 9000
+    range: 18.0
+    damage-per-tick: 1.5
+    root-duration: 40
+
+  ultimates:
+    infernostorm:
+      enabled: true
+      magic-cost: 250
+      cooldown: 40000
+      range: 30.0
+      damage: 18.0
+      effects: 
+        - fire
+        - lava
+        - heat
+        - lightning
+
+    voidreign:
+      enabled: true
+      magic-cost: 220
+      cooldown: 38000
+      range: 25.0
+      damage: 16.0
+      effects:
+        - shadow
+        - dark
+        - light
+        - void
+
+    arcticfury:
+      enabled: true
+      magic-cost: 200
+      cooldown: 35000
+      range: 28.0
+      damage: 14.0
+      effects:
+        - ice
+        - water
+        - nature
+
+
 
 # UI Settings
 ui:

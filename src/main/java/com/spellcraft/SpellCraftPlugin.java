@@ -197,27 +197,55 @@ public class SpellCraftPlugin extends JavaPlugin {
 
     /**
      * Registers all default spells asynchronously.
-     */
-    public void registerSpells() {
-        ThreadUtil.runAsync(() -> {
-            spellManager.registerSpellAsync(new FireballSpell());
-            spellManager.registerSpellAsync(new HealSpell());
-            spellManager.registerSpellAsync(new TeleportSpell());
-            spellManager.registerSpellAsync(new LightningSpell());
-            spellManager.registerSpellAsync(new ShieldSpell());
-            spellManager.registerSpellAsync(new EarthBlock());
-            spellManager.registerSpellAsync(new Flamethrower());
-            spellManager.registerSpellAsync(new AquaMissile());
-            spellManager.registerSpellAsync(new AirJets());
-            spellManager.registerSpellAsync(new EarthKick());
-            spellManager.registerSpellAsync(new WaterManipulation());
-            spellManager.registerSpellAsync(new GolemSpell());
-            spellManager.registerSpellAsync(new AngelFlareSpell());
-            spellManager.registerSpellAsync(new IceShardSpell());
+    /**
+ * Registers all default spells asynchronously.
+ */
+public void registerSpells() {
+    ThreadUtil.runAsync(() -> {
+        FileConfiguration config = getConfig();
 
-            getLogger().info("Registered " + spellManager.getAllSpells().size() + " spells");
-        });
-    }
+        // Core spells
+        if (config.getBoolean("spells.fireball.enabled", true))
+            spellManager.registerSpellAsync(new FireballSpell());
+        if (config.getBoolean("spells.heal.enabled", true))
+            spellManager.registerSpellAsync(new HealSpell());
+        if (config.getBoolean("spells.teleport.enabled", true))
+            spellManager.registerSpellAsync(new TeleportSpell());
+        if (config.getBoolean("spells.lightning.enabled", true))
+            spellManager.registerSpellAsync(new LightningSpell());
+        if (config.getBoolean("spells.shield.enabled", true))
+            spellManager.registerSpellAsync(new ShieldSpell());
+        if (config.getBoolean("spells.earthkick.enabled", true))
+            spellManager.registerSpellAsync(new EarthKick());
+        if (config.getBoolean("spells.earthblock.enabled", true))
+            spellManager.registerSpellAsync(new EarthBlock());
+        if (config.getBoolean("spells.flamethrower.enabled", true))
+            spellManager.registerSpellAsync(new Flamethrower());
+        if (config.getBoolean("spells.aqua-missile.enabled", true))
+            spellManager.registerSpellAsync(new AquaMissile());
+        if (config.getBoolean("spells.airjets.enabled", true))
+            spellManager.registerSpellAsync(new AirJets());
+        if (config.getBoolean("spells.watermanipulation.enabled", true))
+            spellManager.registerSpellAsync(new WaterManipulation());
+        if (config.getBoolean("spells.golemspell.enabled", true))
+            spellManager.registerSpellAsync(new GolemSpell());
+        if (config.getBoolean("spells.iceshard.enabled", true))
+            spellManager.registerSpellAsync(new IceShardSpell());
+        if (config.getBoolean("spells.dragonbreath.enabled", true))
+            spellManager.registerSpellAsync(new DragonBreathSpell());
+        if (config.getBoolean("spells.magmabarrage.enabled", true))
+            spellManager.registerSpellAsync(new MagmaBarrageSpell());
+        if (config.getBoolean("spells.shadowtentacles.enabled", true))
+            spellManager.registerSpellAsync(new ShadowTentaclesSpell());
+        if (config.getBoolean("spells.lavadragon.enabled", true))
+            spellManager.registerSpellAsync(new LavaDragonSpell());
+        if (config.getBoolean("spells.naturegrasp.enabled", true))
+            spellManager.registerSpellAsync(new NatureGraspSpell());
+
+        getLogger().info("Registered " + spellManager.getAllSpells().size() + " spells");
+    });
+}
+
 
     /** Registers all plugin event listeners */
     private void registerListeners() {
