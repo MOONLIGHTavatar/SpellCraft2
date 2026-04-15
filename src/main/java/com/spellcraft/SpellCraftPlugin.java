@@ -241,6 +241,8 @@ public void registerSpells() {
             spellManager.registerSpellAsync(new LavaDragonSpell());
         if (config.getBoolean("spells.naturegrasp.enabled", true))
             spellManager.registerSpellAsync(new NatureGraspSpell());
+        if (config.getBoolean("spells.hollowvoid.enabled", true))
+            spellManager.registerSpellAsync(new HollowVoid());    
 
         getLogger().info("Registered " + spellManager.getAllSpells().size() + " spells");
     });

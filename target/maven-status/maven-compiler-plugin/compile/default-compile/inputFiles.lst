@@ -5,6 +5,7 @@
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/SpellCategory.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/util/TempFallingBlock.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/LavaDragonSpell.java
+/home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/StormIgnition.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/core/perks/PerkManager.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/SpellResult.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/hooks/GriefPreventionHook.java
@@ -12,12 +13,14 @@
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/AquaMissile.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/util/CollisionUtil.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/commands/SpellBindCommand.java
+/home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/HollowVoid.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/core/AbstractSpell.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/listeners/SpellCastListener.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/SpellManager.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/commands/SpellBookCommand.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/IceShardSpell.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/core/data/PlayerDataManager.java
+/home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/VolcanicSurge.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/commands/HouseCommand.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/MagmaBarrageSpell.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/listeners/SpellBookListener.java
@@ -41,6 +44,7 @@
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/HealSpell.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/util/TempBlock.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/SpellBook.java
+/home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/ThunderFlare.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/util/DamageHandler.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/Spell.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/ArcticFuryUltimate.java
@@ -48,6 +52,7 @@
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/event/SpellCastEvent.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/api/event/SpellEvent.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/core/SpellBookImpl.java
+/home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/StoneCyclone.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/core/SpellCasterImpl.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/NatureGraspSpell.java
 /home/olasegilola40/SpellCraft/src/main/java/com/spellcraft/spells/ShieldSpell.java

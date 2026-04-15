@@ -1,4 +1,4 @@
-package com.spellcraft.spells.ultimate;
+package com.spellcraft.spells;
 
 import com.spellcraft.api.magic.MagicElement;
 import com.spellcraft.api.SpellCaster;

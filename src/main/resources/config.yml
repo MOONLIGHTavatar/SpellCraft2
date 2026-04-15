@@ -109,7 +109,7 @@ spells:
     hit-radius: 1.5
     max-ticks: 200
 
-    iceshard:
+  iceshard:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -120,7 +120,7 @@ spells:
     max-ticks: 200
 
     
-    angellightbeam:
+  angellightbeam:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -130,7 +130,7 @@ spells:
     hit-radius: 1.5
     max-ticks: 200
 
-    golemspell:
+    olemspell:
     enabled: true
     magic-cost: 25
     cooldown: 4000
@@ -222,6 +222,84 @@ spells:
         - ice
         - water
         - nature
+
+    hollowvoid:
+      enabled: true
+      magic-cost: 80
+      cooldown: 12000
+      range: 35.0
+      damage: 12.0
+      speed: 0.75
+      hit-radius: 2.5
+      max-ticks: 80
+
+    stonecyclone:
+     enabled: true
+     magic-cost: 55
+     cooldown: 9000
+     range: 20.0
+     damage: 8.0
+     pull-radius: 4.0
+     speed: 0.6
+
+  dustlaunch:
+    enabled: true
+    magic-cost: 35
+    cooldown: 6000
+    range: 10.0
+    knockup: 1.2
+    knockback: 1.5
+
+  quakeburst:
+    enabled: true
+    magic-cost: 50
+    cooldown: 8000
+    range: 8.0
+    damage: 10.0
+    radius: 4.0
+
+  sandcoffin:
+    enabled: true
+    magic-cost: 60
+    cooldown: 12000
+    range: 15.0
+    duration: 60
+
+  boulderjet:
+    enabled: true
+    magic-cost: 40
+    cooldown: 7000
+    range: 30.0
+    damage: 9.0
+    speed: 1.0
+
+  earthglide:
+    enabled: true
+    magic-cost: 45
+    cooldown: 10000
+    duration: 120    
+
+  thunderflare:
+    enabled: true
+    magic-cost: 45
+    cooldown: 8000
+    range: 30.0
+    damage: 12.0
+    radius: 3.0
+
+  volcanicsurge:
+    enabled: true
+    magic-cost: 40
+    cooldown: 7000
+    range: 25.0
+    damage: 10.0
+
+  stormignition:
+    enabled: true
+    magic-cost: 50
+    cooldown: 9000
+    range: 35.0
+    damage: 12.0
 
 
 
