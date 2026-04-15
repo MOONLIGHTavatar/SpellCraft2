@@ -242,7 +242,16 @@ public void registerSpells() {
         if (config.getBoolean("spells.naturegrasp.enabled", true))
             spellManager.registerSpellAsync(new NatureGraspSpell());
         if (config.getBoolean("spells.hollowvoid.enabled", true))
-            spellManager.registerSpellAsync(new HollowVoid());    
+            spellManager.registerSpellAsync(new HollowVoid()); 
+        if (config.getBoolean("spells.stormignition.enabled", true))   
+            spellManager.registerSpellAsync(new StormIgnition());
+        if (config.getBoolean("spells.thunderflare.enabled", true))
+            spellManager.registerSpellAsync(new ThunderFlare());
+        if (config.getBoolean("spells.stonecylcone.enabled", true))
+            spellManager.registerSpellAsync(new StoneCyclone());
+        if (config.getBoolean("spells.volcanicsurge.enabled", true))
+            spellManager.registerSpellAsync(new VolcanicSurge());
+
 
         getLogger().info("Registered " + spellManager.getAllSpells().size() + " spells");
     });
